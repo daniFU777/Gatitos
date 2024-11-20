@@ -1,47 +1,29 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100vh;
-    margin: 0;
-    background-color: #000; 
-    color: #00f;
-    padding-top: 20px;
-}
+let isGenerating = false;  // Variable para controlar el estado de generación
 
-#loader {
-    display: none; /* Ocultar el indicador al principio */
-    font-size: 2rem;
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
+function generateCatImage() {
+    if (isGenerating) {
+        return;  // Si ya se está generando, no hacer nada
+    }
 
-#catImage {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    border: 10px solid #4b0082;
-    padding: 5px;
-    margin-top: 20px;
-}
+    isGenerating = true;  // Marcar como en proceso de generación
+    const loader = document.getElementById('loader');
+    const catImage = document.getElementById('catImage');
 
-button {
-    background-color: #4b0082;
-    color: white;
-    border: none;
-    padding: 15px 0;
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: 0px;
-    margin-top: 20px;
-    width: 100%;
-    text-align: center;
-}
+    loader.style.display = 'block';  // Mostrar el indicador de carga
+    catImage.style.display = 'none'; // Ocultar la imagen mientras se carga
 
-button:hover {
-    background-color: #6a0dad;
+    // Hacer la solicitud para generar la imagen
+    const imageUrl = "https://cataas.com/cat?random=" + new Date().getTime(); // Evitar caché agregando un parámetro único
+
+    // Cargar la nueva imagen
+    catImage.src = imageUrl;
+
+    // Esperar a que la imagen se haya cargado
+    catImage.onload = function() {
+        loader.style.display = 'none'; // Ocultar el indicador de carga
+        catImage.style.display = 'block'; // Mostrar la imagen
+        setTimeout(() => {
+            isGenerating = false;  // Liberar el botón después de 3 segundos
+        }, 3000);  // Esperar 3 segundos antes de permitir otro clic
+    };
 }
