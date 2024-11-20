@@ -27,7 +27,10 @@ body {
 
 #catImage {
     max-width: 90%; /* Limita el tamaño de la imagen al 90% del ancho */
+    max-height: 90vh; /* Limita la altura máxima de la imagen al 90% de la ventana */
+    width: auto; /* Mantiene la proporción de la imagen */
     height: auto; /* Mantiene la proporción de la imagen */
+    object-fit: contain; /* Ajusta la imagen para que se vea completa sin recortarse */
     border-radius: 10px;
     border: 10px solid #4b0082; /* Marco morado alrededor de la imagen */
     padding: 5px;
