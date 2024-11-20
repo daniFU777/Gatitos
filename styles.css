@@ -22,6 +22,7 @@ body {
     background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para que sea legible */
     padding: 5px 10px;
     border-radius: 5px; /* Bordes redondeados */
+    z-index: 1000; /* Asegura que el texto se muestre encima de otros elementos */
 }
 
 #catImage {
