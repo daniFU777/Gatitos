@@ -2,9 +2,16 @@ let isGenerating = false;  // Controla el estado de la generación de la imagen
 
 function generateCatImage() {
     const button = document.getElementById('generateButton');  // Seleccionamos el botón de generar
+    const sound = document.getElementById('buttonSound');  // Seleccionamos el audio del botón
+
     if (isGenerating) {
         return;  // Si ya se está generando una imagen, no hacer nada
     }
+
+    // Reproducir el sonido del gato
+    sound.play().catch(error => {
+        console.error('Error al reproducir el sonido:', error);
+    });
 
     isGenerating = true;  // Marcar que se está generando
     button.style.display = 'none';  // Ocultar el botón
@@ -19,13 +26,13 @@ function generateCatImage() {
     // Hacer la solicitud para generar la imagen
     const imageUrl = "https://cataas.com/cat?random=" + new Date().getTime(); // Evitar caché agregando un parámetro único
 
-    // Cargar la nueva imagen
-    catImage.src = imageUrl;
-
     // Temporizador de 10 segundos para recargar la página si no se carga la imagen
     const timeout = setTimeout(() => {
         location.reload();  // Recargar la página
     }, 10000); // 10 segundos (10000 ms)
+
+    // Cargar la nueva imagen
+    catImage.src = imageUrl;
 
     // Esperar a que la imagen se haya cargado
     catImage.onload = function() {
