@@ -3,24 +3,30 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* Mueve los elementos hacia la parte superior */
     height: 100vh;
     margin: 0;
-    background-color: #000;
+    background-color: #000; /* Fondo negro */
     color: #00f; /* Texto azul */
-    padding-top: 40px;
+    padding-top: 20px; /* Espacio superior para que el título no toque el borde */
 }
 
 h1 {
     color: #00f; /* Texto azul */
+    margin: 0;
+    font-size: 2rem;
+}
+
+#spacer {
+    height: 30px; /* Espacio vacío entre el título y la imagen */
 }
 
 #catImage {
-    max-width: 80%; /* Ajustar el tama�o m�ximo */
-    height: auto;
+    max-width: 100%; /* Ajusta el ancho de la imagen al 100% del contenedor */
+    height: auto; /* Mantén la proporción original */
     border-radius: 10px;
     border: 10px solid #4b0082; /* Marco morado alrededor de la imagen */
-    padding: 5px; /* Espacio entre la imagen y el borde */
+    padding: 5px;
     margin-top: 20px;
 }
 
@@ -28,20 +34,15 @@ button {
     background-color: #4b0082; /* Morado oscuro */
     color: white;
     border: none;
-    padding: 15px 0; /* Ajusta el padding */
+    padding: 15px 0;
     font-size: 18px;
     cursor: pointer;
     border-radius: 0px; /* Sin bordes redondeados */
     margin-top: 20px;
     width: 100%; /* Ocupa todo el ancho de la pantalla */
-    text-align: center; /* Centra el texto */
+    text-align: center;
 }
 
 button:hover {
-    background-color: #6a0dad; /* Morado m�s oscuro en hover */
-}
-
-#scanAndDownloadButton {
-    margin-top: 10px;
-    width: 100%; /* Ocupa todo el ancho de la pantalla */
+    background-color: #6a0dad; /* Morado más oscuro en hover */
 }
