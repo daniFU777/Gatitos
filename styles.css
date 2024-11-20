@@ -8,17 +8,11 @@ body {
     margin: 0;
     background-color: #000; /* Fondo negro */
     color: #00f; /* Texto azul */
-    padding-top: 20px; /* Espacio superior para que el título no toque el borde */
-}
-
-h1 {
-    color: #00f; /* Texto azul */
-    margin: 0;
-    font-size: 2rem;
+    padding-top: 20px; /* Espacio superior */
 }
 
 #spacer {
-    height: 30px; /* Espacio vacío entre el título y la imagen */
+    height: 30px; /* Espacio vacío */
 }
 
 #catImage {
