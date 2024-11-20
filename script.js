@@ -22,8 +22,14 @@ function generateCatImage() {
     // Cargar la nueva imagen
     catImage.src = imageUrl;
 
+    // Temporizador de 10 segundos para recargar la página si no se carga la imagen
+    const timeout = setTimeout(() => {
+        location.reload();  // Recargar la página
+    }, 10000); // 10 segundos (10000 ms)
+
     // Esperar a que la imagen se haya cargado
     catImage.onload = function() {
+        clearTimeout(timeout);  // Limpiar el temporizador si la imagen se carga antes del tiempo límite
         loader.style.display = 'none'; // Ocultar el indicador de carga
         catImage.style.display = 'block'; // Mostrar la imagen
 
