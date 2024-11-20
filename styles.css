@@ -17,8 +17,11 @@ body {
     font-size: 2rem;
     color: #fff;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 10px;  /* Posicionarlo a 10px desde la parte superior */
+    right: 10px;  /* Posicionarlo a 10px desde la parte derecha */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para que sea legible */
+    padding: 5px 10px;
+    border-radius: 5px; /* Bordes redondeados */
 }
 
 #catImage {
