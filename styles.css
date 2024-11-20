@@ -3,40 +3,45 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Mueve los elementos hacia la parte superior */
+    justify-content: flex-start;
     height: 100vh;
     margin: 0;
-    background-color: #000; /* Fondo negro */
-    color: #00f; /* Texto azul */
-    padding-top: 20px; /* Espacio superior */
+    background-color: #000; 
+    color: #00f;
+    padding-top: 20px;
 }
 
-#spacer {
-    height: 30px; /* Espacio vacío */
+#loader {
+    display: none; /* Ocultar el indicador al principio */
+    font-size: 2rem;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #catImage {
-    max-width: 100%; /* Ajusta el ancho de la imagen al 100% del contenedor */
-    height: auto; /* Mantén la proporción original */
+    max-width: 100%;
+    height: auto;
     border-radius: 10px;
-    border: 10px solid #4b0082; /* Marco morado alrededor de la imagen */
+    border: 10px solid #4b0082;
     padding: 5px;
     margin-top: 20px;
 }
 
 button {
-    background-color: #4b0082; /* Morado oscuro */
+    background-color: #4b0082;
     color: white;
     border: none;
     padding: 15px 0;
     font-size: 18px;
     cursor: pointer;
-    border-radius: 0px; /* Sin bordes redondeados */
+    border-radius: 0px;
     margin-top: 20px;
-    width: 100%; /* Ocupa todo el ancho de la pantalla */
+    width: 100%;
     text-align: center;
 }
 
 button:hover {
-    background-color: #6a0dad; /* Morado más oscuro en hover */
+    background-color: #6a0dad;
 }
