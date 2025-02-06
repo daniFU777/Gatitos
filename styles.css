@@ -60,6 +60,23 @@ button:hover {
     background-color: #6a0dad;
 }
 
+#downloadButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #4b0082;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#downloadButton:hover {
+    background-color: #6a0dad;
+}
+
 @media (max-width: 600px) {
     button {
         width: 95vw;
