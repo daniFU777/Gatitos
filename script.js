@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     const generateBtn = document.getElementById("generateBtn");
-    
-    if (!generateBtn) {
-        console.error("Error: No se encontró el botón con id 'generateBtn'. Verifica el HTML.");
+    const container = document.getElementById("container");
+
+    if (!generateBtn || !container) {
+        console.error("Error: No se encontró el botón 'generateBtn' o el contenedor 'container'.");
         return;
     }
 
@@ -21,16 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
     downloadBtn.style.border = "none";
     downloadBtn.style.cursor = "pointer";
 
-    document.body.appendChild(catImage);
-    document.body.appendChild(downloadBtn);
+    container.appendChild(catImage);
+    container.appendChild(downloadBtn);
 
     generateBtn.addEventListener("click", async () => {
         try {
-            const response = await fetch("https://api.thecatapi.com/v1/images/search?limit=1&size=full", {
-                headers: {
-                    "x-api-key": "TU_CLAVE_DE_API_AQUI" // Agrega tu clave si es necesario
-                }
-            });
+            const response = await fetch("https://api.thecatapi.com/v1/images/search");
             const data = await response.json();
 
             if (!data || data.length === 0) {
@@ -55,16 +52,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = catImage.naturalWidth;
-        canvas.height = catImage.naturalHeight;
-        ctx.drawImage(catImage, 0, 0);
-
-        const enlace = document.createElement("a");
-        enlace.href = canvas.toDataURL("image/jpeg");
-        enlace.download = "gatito.jpg";
-        enlace.click();
+        const link = document.createElement("a");
+        link.href = catImage.src;
+        link.download = "gatito.jpg";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     });
 });
