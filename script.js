@@ -21,7 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     generateBtn.addEventListener("click", async () => {
         try {
-            const response = await fetch("https://api.thecatapi.com/v1/images/search");
+            const response = await fetch("https://api.thecatapi.com/v1/images/search?limit=1&size=full", {
+                headers: {
+                    "x-api-key": "TU_CLAVE_DE_API_AQUI" // Agrega tu clave si es necesario
+                }
+            });
             const data = await response.json();
 
             if (!data || data.length === 0) {
