@@ -1,50 +1,32 @@
-let isGenerating = false;  // Controla el estado de la generación de la imagen
+document.addEventListener("DOMContentLoaded", () => {
+    const catImage = document.getElementById("catImage");
+    const generateButton = document.getElementById("generateButton");
+    const downloadButton = document.getElementById("downloadButton");
+    const loader = document.getElementById("loader");
 
-function generateCatImage() {
-    const button = document.getElementById('generateButton');  // Seleccionamos el botón de generar
-    const sound = document.getElementById('buttonSound');  // Seleccionamos el audio del botón
-
-    if (isGenerating) {
-        return;  // Si ya se está generando una imagen, no hacer nada
+    async function fetchCatImage() {
+        loader.style.display = "block";
+        try {
+            const response = await fetch("https://api.thecatapi.com/v1/images/search");
+            const data = await response.json();
+            catImage.src = data[0].url;
+            downloadButton.style.display = "block";
+        } catch (error) {
+            console.error("Error al obtener la imagen: ", error);
+        } finally {
+            loader.style.display = "none";
+        }
     }
 
-    // Reproducir el sonido del gato
-    sound.play().catch(error => {
-        console.error('Error al reproducir el sonido:', error);
-    });
+    function downloadImage() {
+        const link = document.createElement("a");
+        link.href = catImage.src;
+        link.download = "gatito.jpg";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 
-    isGenerating = true;  // Marcar que se está generando
-    button.style.display = 'none';  // Ocultar el botón
-    button.disabled = true;  // Deshabilitar el botón
-
-    const loader = document.getElementById('loader');
-    const catImage = document.getElementById('catImage');
-
-    loader.style.display = 'block';  // Mostrar el indicador de carga
-    catImage.style.display = 'none'; // Ocultar la imagen mientras se carga
-
-    // Hacer la solicitud para generar la imagen
-    const imageUrl = "https://cataas.com/cat?random=" + new Date().getTime(); // Evitar caché agregando un parámetro único
-
-    // Temporizador de 10 segundos para recargar la página si no se carga la imagen
-    const timeout = setTimeout(() => {
-        location.reload();  // Recargar la página
-    }, 10000); // 10 segundos (10000 ms)
-
-    // Cargar la nueva imagen
-    catImage.src = imageUrl;
-
-    // Esperar a que la imagen se haya cargado
-    catImage.onload = function() {
-        clearTimeout(timeout);  // Limpiar el temporizador si la imagen se carga antes del tiempo límite
-        loader.style.display = 'none'; // Ocultar el indicador de carga
-        catImage.style.display = 'block'; // Mostrar la imagen
-
-        // Habilitar y mostrar el botón después de 3 segundos
-        setTimeout(() => {
-            isGenerating = false;  // Marcar como no generando
-            button.style.display = 'block';  // Mostrar el botón
-            button.disabled = false;  // Habilitar el botón
-        }, 3000);  // Esperar 3 segundos antes de permitir otro clic
-    };
-}
+    generateButton.addEventListener("click", fetchCatImage);
+    downloadButton.addEventListener("click", downloadImage);
+});
