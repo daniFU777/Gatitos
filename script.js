@@ -1,38 +1,36 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const catImage = document.getElementById("catImage");
-    const generateButton = document.getElementById("generateButton");
-    const downloadButton = document.getElementById("downloadButton");
-    const loader = document.getElementById("loader");
+const catImage = document.getElementById("catImage");
+const generateBtn = document.getElementById("generateBtn");
+const downloadBtn = document.getElementById("downloadBtn");
 
-    async function fetchCatImage() {
-        loader.style.display = "block";
-        catImage.style.display = "none"; // Oculta la imagen mientras carga
-        downloadButton.style.display = "none"; // Oculta el botón de descarga
+generateBtn.addEventListener("click", generateImage);
+downloadBtn.addEventListener("click", downloadImage);
 
-        try {
-            const response = await fetch("https://api.thecatapi.com/v1/images/search");
-            const data = await response.json();
-            catImage.src = data[0].url;
-            catImage.style.display = "block"; // Muestra la imagen cuando se carga
-            downloadButton.style.display = "block"; // Muestra el botón de descarga
-        } catch (error) {
-            console.error("Error al obtener la imagen: ", error);
-        } finally {
-            loader.style.display = "none";
-        }
+function generateImage() {
+    fetch("https://api.thecatapi.com/v1/images/search")
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                catImage.src = data[0].url;
+                catImage.style.display = "block";
+            }
+        })
+        .catch(error => console.error("Error al obtener la imagen:", error));
+}
+
+function downloadImage() {
+    if (catImage.src) {
+        fetch(catImage.src)
+            .then(response => response.blob())
+            .then(blob => {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = "gatito.jpg";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            })
+            .catch(error => console.error("Error al descargar la imagen: ", error));
     }
-
-    function downloadImage() {
-        if (catImage.src) {
-            const link = document.createElement("a");
-            link.href = catImage.src;
-            link.download = "gatito.jpg";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }
-
-    generateButton.addEventListener("click", fetchCatImage);
-    downloadButton.addEventListener("click", downloadImage);
-});
+}
