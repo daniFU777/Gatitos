@@ -1,62 +1,50 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const generateBtn = document.getElementById("generateBtn");
-    const container = document.getElementById("container");
+let isGenerating = false;  // Controla el estado de la generación de la imagen
 
-    if (!generateBtn || !container) {
-        console.error("Error: No se encontró el botón 'generateBtn' o el contenedor 'container'.");
-        return;
+function generateCatImage() {
+    const button = document.getElementById('generateButton');  // Seleccionamos el botón de generar
+    const sound = document.getElementById('buttonSound');  // Seleccionamos el audio del botón
+
+    if (isGenerating) {
+        return;  // Si ya se está generando una imagen, no hacer nada
     }
 
-    let catImage = document.createElement("img");
-    catImage.style.maxWidth = "500px";
-    catImage.style.display = "block";
-    catImage.style.margin = "20px auto";
-
-    let downloadBtn = document.createElement("button");
-    downloadBtn.innerText = "Descargar imagen";
-    downloadBtn.style.display = "none";
-    downloadBtn.style.margin = "10px auto";
-    downloadBtn.style.padding = "10px";
-    downloadBtn.style.backgroundColor = "purple";
-    downloadBtn.style.color = "white";
-    downloadBtn.style.border = "none";
-    downloadBtn.style.cursor = "pointer";
-
-    container.appendChild(catImage);
-    container.appendChild(downloadBtn);
-
-    generateBtn.addEventListener("click", async () => {
-        try {
-            const response = await fetch("https://api.thecatapi.com/v1/images/search");
-            const data = await response.json();
-
-            if (!data || data.length === 0) {
-                throw new Error("No se encontró ninguna imagen.");
-            }
-
-            catImage.src = data[0].url;
-            catImage.crossOrigin = "anonymous"; 
-
-            catImage.onload = () => {
-                downloadBtn.style.display = "block";
-            };
-
-        } catch (error) {
-            console.error("Error al obtener la imagen:", error);
-        }
+    // Reproducir el sonido del gato
+    sound.play().catch(error => {
+        console.error('Error al reproducir el sonido:', error);
     });
 
-    downloadBtn.addEventListener("click", () => {
-        if (!catImage.src) {
-            alert("Genera una imagen antes de descargar.");
-            return;
-        }
+    isGenerating = true;  // Marcar que se está generando
+    button.style.display = 'none';  // Ocultar el botón
+    button.disabled = true;  // Deshabilitar el botón
 
-        const link = document.createElement("a");
-        link.href = catImage.src;
-        link.download = "gatito.jpg";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    });
-});
+    const loader = document.getElementById('loader');
+    const catImage = document.getElementById('catImage');
+
+    loader.style.display = 'block';  // Mostrar el indicador de carga
+    catImage.style.display = 'none'; // Ocultar la imagen mientras se carga
+
+    // Hacer la solicitud para generar la imagen
+    const imageUrl = "https://cataas.com/cat?random=" + new Date().getTime(); // Evitar caché agregando un parámetro único
+
+    // Temporizador de 10 segundos para recargar la página si no se carga la imagen
+    const timeout = setTimeout(() => {
+        location.reload();  // Recargar la página
+    }, 10000); // 10 segundos (10000 ms)
+
+    // Cargar la nueva imagen
+    catImage.src = imageUrl;
+
+    // Esperar a que la imagen se haya cargado
+    catImage.onload = function() {
+        clearTimeout(timeout);  // Limpiar el temporizador si la imagen se carga antes del tiempo límite
+        loader.style.display = 'none'; // Ocultar el indicador de carga
+        catImage.style.display = 'block'; // Mostrar la imagen
+
+        // Habilitar y mostrar el botón después de 3 segundos
+        setTimeout(() => {
+            isGenerating = false;  // Marcar como no generando
+            button.style.display = 'block';  // Mostrar el botón
+            button.disabled = false;  // Habilitar el botón
+        }, 3000);  // Esperar 3 segundos antes de permitir otro clic
+    };
+}
