@@ -18,14 +18,15 @@ function generateImage() {
 }
 
 function downloadImage() {
-    if (catImage.src) {
-        fetch(catImage.src)
-            .then(response => response.blob())
-            .then(blob => {
-                convertToJPG(blob);
-            })
-            .catch(error => console.error("Error al descargar la imagen: ", error));
+    if (!catImage.src || catImage.src === window.location.href) {
+        console.error("No hay imagen para descargar.");
+        return;
     }
+
+    fetch(catImage.src)
+        .then(response => response.blob())
+        .then(blob => convertToJPG(blob))
+        .catch(error => console.error("Error al descargar la imagen: ", error));
 }
 
 function convertToJPG(blob) {
@@ -40,17 +41,14 @@ function convertToJPG(blob) {
             canvas.height = img.height;
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0);
-            
-            canvas.toBlob((jpgBlob) => {
-                const url = URL.createObjectURL(jpgBlob);
-                const link = document.createElement("a");
-                link.href = url;
-                link.download = "gatito.jpg";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-            }, "image/jpeg", 1.0);
+
+            const jpgUrl = canvas.toDataURL("image/jpeg", 1.0);
+            const link = document.createElement("a");
+            link.href = jpgUrl;
+            link.download = "gatito.jpg";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         };
     };
 }
