@@ -20,8 +20,17 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (data.length > 0 && data[0].url) {
                     catImage.src = data[0].url;
                     catImage.style.display = "block";
-                    downloadBtn.href = data[0].url;
-                    downloadBtn.style.display = "block";
+                    
+                    // Descargar la imagen correctamente
+                    fetch(data[0].url)
+                        .then(res => res.blob()) // Convertir la imagen en un Blob
+                        .then(blob => {
+                            const url = URL.createObjectURL(blob);
+                            downloadBtn.href = url;
+                            downloadBtn.download = "gatito.jpg"; // Nombre del archivo
+                            downloadBtn.style.display = "block";
+                        })
+                        .catch(error => console.error("Error al preparar la descarga:", error));
                 } else {
                     console.error("No se recibieron datos válidos.");
                 }
