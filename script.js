@@ -28,8 +28,8 @@ document.addEventListener("DOMContentLoaded", function() {
                         .then(blob => {
                             const blobUrl = URL.createObjectURL(blob);
                             downloadBtn.href = blobUrl;
-                            downloadBtn.download = "gatito.jpg"; // Forzar descarga
-                            downloadBtn.style.display = "block";
+                            downloadBtn.download = "gatito.jpg";
+                            downloadBtn.style.display = "block"; // Mostrar botón de descarga
                         })
                         .catch(error => console.error("Error al preparar la descarga:", error));
                 } else {
@@ -37,12 +37,5 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             })
             .catch(error => console.error("Error al obtener la imagen:", error));
-    });
-
-    downloadBtn.addEventListener("click", function(event) {
-        if (!downloadBtn.href.startsWith("blob:")) {
-            event.preventDefault();
-            console.warn("La imagen aún no está lista para descargar.");
-        }
     });
 });
