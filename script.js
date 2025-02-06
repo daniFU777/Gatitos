@@ -1,49 +1,61 @@
-const catImage = document.createElement("img"); // Crear imagen dinámicamente
-catImage.style.maxWidth = "500px"; // Ajustar tamaño
-catImage.style.display = "block"; // Mostrar en bloque
-catImage.style.margin = "20px auto"; // Centrar
+document.addEventListener("DOMContentLoaded", () => {
+    const generateBtn = document.getElementById("generateBtn");
+    
+    let catImage = document.createElement("img");
+    catImage.style.maxWidth = "500px";
+    catImage.style.display = "block";
+    catImage.style.margin = "20px auto";
 
-const generateBtn = document.getElementById("generateBtn");
-const downloadBtn = document.getElementById("downloadBtn");
+    let downloadBtn = document.createElement("button");
+    downloadBtn.innerText = "Descargar imagen";
+    downloadBtn.style.display = "none";
+    downloadBtn.style.margin = "10px auto";
+    downloadBtn.style.padding = "10px";
+    downloadBtn.style.backgroundColor = "purple";
+    downloadBtn.style.color = "white";
+    downloadBtn.style.border = "none";
+    downloadBtn.style.cursor = "pointer";
 
-// Agregar la imagen al cuerpo del documento
-document.body.insertBefore(catImage, generateBtn);
+    document.body.insertBefore(catImage, generateBtn);
+    document.body.insertBefore(downloadBtn, generateBtn.nextSibling);
 
-generateBtn.addEventListener("click", async () => {
-    try {
-        const response = await fetch("https://api.thecatapi.com/v1/images/search");
-        const data = await response.json();
-        const imageUrl = data[0].url;
+    generateBtn.addEventListener("click", async () => {
+        try {
+            const response = await fetch("https://api.thecatapi.com/v1/images/search");
+            const data = await response.json();
 
-        // Cargar la imagen en el <img>
-        catImage.src = imageUrl;
-        catImage.crossOrigin = "anonymous"; // Evitar problemas CORS en canvas
+            if (!data || data.length === 0) {
+                throw new Error("No se encontró ninguna imagen.");
+            }
 
-        // Mostrar el botón de descarga cuando la imagen cargue
-        catImage.onload = () => {
-            downloadBtn.style.display = "block";
-        };
-    } catch (error) {
-        console.error("Error al obtener la imagen:", error);
-    }
-});
+            catImage.src = data[0].url;
+            catImage.crossOrigin = "anonymous"; 
 
-downloadBtn.addEventListener("click", () => {
-    if (!catImage.src) {
-        alert("Primero genera una imagen");
-        return;
-    }
+            catImage.onload = () => {
+                downloadBtn.style.display = "block";
+            };
 
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+        } catch (error) {
+            console.error("Error al obtener la imagen:", error);
+        }
+    });
 
-    canvas.width = catImage.naturalWidth;
-    canvas.height = catImage.naturalHeight;
+    downloadBtn.addEventListener("click", () => {
+        if (!catImage.src) {
+            alert("Genera una imagen antes de descargar.");
+            return;
+        }
 
-    ctx.drawImage(catImage, 0, 0);
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
 
-    const enlace = document.createElement("a");
-    enlace.href = canvas.toDataURL("image/jpeg");
-    enlace.download = "gatito.jpg";
-    enlace.click();
+        canvas.width = catImage.naturalWidth;
+        canvas.height = catImage.naturalHeight;
+        ctx.drawImage(catImage, 0, 0);
+
+        const enlace = document.createElement("a");
+        enlace.href = canvas.toDataURL("image/jpeg");
+        enlace.download = "gatito.jpg";
+        enlace.click();
+    });
 });
