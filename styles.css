@@ -7,34 +7,31 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #000;
-    color: #00f;
+    color: #fff;
     padding: 0;
     box-sizing: border-box;
-    overflow: hidden; /* Evita el desbordamiento */
+    overflow: hidden;
 }
 
 #loader {
     display: none;
-    font-size: 2rem;
-    color: #fff;
+    font-size: 1.5rem;
+    color: white;
     position: absolute;
     top: 10px;
-    right: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
     border-radius: 5px;
     z-index: 1000;
 }
 
 #catImage {
-    max-width: 100vw; /* Ajusta la imagen al ancho de la pantalla */
-    max-height: 80vh; /* Usa más espacio en la pantalla */
+    max-width: 80vw;
+    max-height: 70vh;
     width: auto;
     height: auto;
-    object-fit: contain;
     border-radius: 10px;
-    border: 10px solid #4b0082;
-    padding: 5px;
+    border: 5px solid #4b0082;
     margin-top: 10px;
 }
 
@@ -42,18 +39,14 @@ button {
     background-color: #4b0082;
     color: white;
     border: none;
-    padding: 15px 0;
+    padding: 15px 20px;
     font-size: 18px;
     cursor: pointer;
     border-radius: 5px;
     margin-top: 10px;
-    width: 90vw; /* Ajuste al ancho de la pantalla */
+    width: 90%;
+    max-width: 250px;
     text-align: center;
-    max-width: 300px; /* Limitar el tamaño máximo */
-    position: absolute;
-    bottom: 10px; /* Mantiene el botón visible */
-    left: 50%;
-    transform: translateX(-50%); /* Centra el botón */
 }
 
 button:hover {
@@ -71,6 +64,7 @@ button:hover {
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
+    display: none;
 }
 
 #downloadButton:hover {
@@ -79,11 +73,11 @@ button:hover {
 
 @media (max-width: 600px) {
     button {
-        width: 95vw;
+        width: 95%;
     }
 
     #catImage {
         max-width: 95vw;
-        max-height: 70vh;
+        max-height: 60vh;
     }
 }
