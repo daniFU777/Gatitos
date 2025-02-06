@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     catImage.src = imageUrl;
                     catImage.style.display = "block";
 
-                    // Preparar descarga con fetch y Blob
+                    // Descargar imagen con Blob
                     fetch(imageUrl)
                         .then(response => response.blob())
                         .then(blob => {
