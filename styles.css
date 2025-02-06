@@ -1,66 +1,50 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Centrado vertical y horizontal */
-    height: 100vh;
+* {
     margin: 0;
-    background-color: #000; /* Fondo negro */
-    color: #00f; /* Texto azul */
     padding: 0;
     box-sizing: border-box;
 }
 
-#loader {
-    display: none; /* Ocultar el indicador de carga inicialmente */
-    font-size: 2rem;
-    color: #fff;
-    position: absolute;
-    top: 10px;  /* Posicionarlo a 10px desde la parte superior */
-    right: 10px;  /* Posicionarlo a 10px desde la parte derecha */
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para que sea legible */
-    padding: 5px 10px;
-    border-radius: 5px; /* Bordes redondeados */
-    z-index: 1000; /* Asegura que el texto se muestre encima de otros elementos */
+body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
 }
 
-#catImage {
-    max-width: 90%; /* Limita el tamaño de la imagen al 90% del ancho */
-    max-height: 90vh; /* Limita la altura máxima de la imagen al 90% de la ventana */
-    width: auto; /* Mantiene la proporción de la imagen */
-    height: auto; /* Mantiene la proporción de la imagen */
-    object-fit: contain; /* Ajusta la imagen para que se vea completa sin recortarse */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+img {
+    max-width: 100%;
+    max-height: 80vh;
     border-radius: 10px;
-    border: 10px solid #4b0082; /* Marco morado alrededor de la imagen */
-    padding: 5px;
-    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+    display: none;
 }
 
-button {
-    background-color: #4b0082; /* Morado oscuro */
+button, a {
+    background-color: #6200ea;
     color: white;
-    border: none;
-    padding: 15px 0;
     font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 5px; /* Bordes redondeados */
-    margin-top: 20px;
-    width: 80%; /* El botón ocupa el 80% del ancho */
     text-align: center;
-    max-width: 400px; /* Limitar el ancho del botón */
+    text-decoration: none;
+    margin-top: 10px;
 }
 
-button:hover {
-    background-color: #6a0dad; /* Morado más oscuro en hover */
+button:disabled {
+    background-color: gray;
 }
 
-@media (max-width: 600px) {
-    button {
-        width: 95%; /* El botón ocupa el 95% del ancho en pantallas pequeñas */
-    }
-
-    #catImage {
-        max-width: 100%; /* La imagen ocupa el 100% del ancho en pantallas pequeñas */
-    }
+button:hover, a:hover {
+    background-color: #3700b3;
 }
