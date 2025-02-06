@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Gatitos</title>
+    <title>Generador de Imágenes de Gatitos</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <img id="catImage" src="" alt="Gatito">
-        <button id="generateBtn">Generar imagen</button>
-        <button id="downloadBtn" style="display: none;">Descargar imagen</button>  
-    </div>
-
+    <div id="loader" class="loader">Cargando...</div>
+    <img id="catImage" src="https://cataas.com/cat" alt="Gatito">
+    <button id="generateButton" onclick="generateCatImage()">Generar</button>
+    
+    <!-- Audio para el sonido del botón -->
+    <audio id="buttonSound" src="Meow.mp3"></audio>
+    
     <script src="script.js"></script>
 </body>
 </html>
