@@ -18,16 +18,17 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0 && data[0].url) {
-                    catImage.src = data[0].url;
+                    const imageUrl = data[0].url;
+                    catImage.src = imageUrl;
                     catImage.style.display = "block";
                     
-                    // Descargar la imagen correctamente
-                    fetch(data[0].url)
-                        .then(res => res.blob()) // Convertir la imagen en un Blob
+                    // Descargar la imagen correctamente con fetch y Blob
+                    fetch(imageUrl)
+                        .then(response => response.blob())
                         .then(blob => {
                             const url = URL.createObjectURL(blob);
                             downloadBtn.href = url;
-                            downloadBtn.download = "gatito.jpg"; // Nombre del archivo
+                            downloadBtn.download = "gatito.jpg"; // Forzar descarga con nombre
                             downloadBtn.style.display = "block";
                         })
                         .catch(error => console.error("Error al preparar la descarga:", error));
@@ -36,5 +37,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             })
             .catch(error => console.error("Error al obtener la imagen:", error));
+    });
+
+    // Prevenir que el botón solo abra la imagen en otra pestaña
+    downloadBtn.addEventListener("click", function(event) {
+        if (!downloadBtn.href.startsWith("blob:")) {
+            event.preventDefault();
+            console.warn("La imagen aún no está lista para descargar.");
+        }
     });
 });
