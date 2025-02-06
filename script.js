@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     const generateBtn = document.getElementById("generateBtn");
     
+    if (!generateBtn) {
+        console.error("Error: No se encontró el botón con id 'generateBtn'. Verifica el HTML.");
+        return;
+    }
+
     let catImage = document.createElement("img");
     catImage.style.maxWidth = "500px";
     catImage.style.display = "block";
@@ -16,8 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
     downloadBtn.style.border = "none";
     downloadBtn.style.cursor = "pointer";
 
-    document.body.insertBefore(catImage, generateBtn);
-    document.body.insertBefore(downloadBtn, generateBtn.nextSibling);
+    document.body.appendChild(catImage);
+    document.body.appendChild(downloadBtn);
 
     generateBtn.addEventListener("click", async () => {
         try {
